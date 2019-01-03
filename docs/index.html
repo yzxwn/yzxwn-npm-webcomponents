@@ -1,60 +1,93 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Title</title>-->
+    <!--&lt;!&ndash;<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101541988" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html" charset="utf-8"></script>&ndash;&gt;-->
+    <!--&lt;!&ndash;<script src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101537105"></script>&ndash;&gt;-->
+    <!--&lt;!&ndash;<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" charset="utf-8" data-appid="100229030" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html" data-xx-oo="xxoo"></script>&ndash;&gt;-->
+    <!--&lt;!&ndash;<script type="text/javascript"  charset="utf-8"&ndash;&gt;-->
+            <!--&lt;!&ndash;src="https://connect.qq.com/qc_jssdk.js"&ndash;&gt;-->
+            <!--&lt;!&ndash;data-appid="100229030"&ndash;&gt;-->
+            <!--&lt;!&ndash;data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"&ndash;&gt;-->
+    <!--&lt;!&ndash;&gt;</script>&ndash;&gt;-->
+    <!--<script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash;<span id="qqLoginBtn"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;<script type="text/javascript">&ndash;&gt;-->
+    <!--&lt;!&ndash;QC.Login({&ndash;&gt;-->
+        <!--&lt;!&ndash;btnId:"qqLoginBtn"	//插入按钮的节点id&ndash;&gt;-->
+    <!--&lt;!&ndash;});&ndash;&gt;-->
+<!--&lt;!&ndash;</script>&ndash;&gt;-->
+<!--<div>2222222</div>-->
+<!--</body>-->
+
+<!--<script type="text/javascript">-->
+    <!--let time, count = 0;-->
+    <!--const login = () => {-->
+        <!--if(QC.Login.check()){-->
+            <!--alert("1");-->
+            <!--//已登录，获取用户信息-->
+            <!--QC.api("get_user_info")-->
+                <!--.success(function(s){//成功回调-->
+                    <!--localStorage.setItem('qqUser',JSON.stringify(s.data));-->
+                    <!--clearInterval(time);-->
+                    <!--document.getElementsByTagName("div")[0].innerHTML = s.data.nickname;-->
+                <!--})-->
+                <!--.error(function(f){//失败回调-->
+                    <!--clearInterval(time);-->
+                    <!--alert("获取用户信息失败！");-->
+                <!--});-->
+
+        <!--}else{-->
+            <!--//未登录，直接打开QQ登录弹窗-->
+            <!--if(!count){-->
+                <!--alert("2");-->
+                <!--QC.Login.showPopup({-->
+                    <!--appId:"100229030",-->
+<!--//                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"-->
+                <!--});-->
+                <!--count ++;-->
+            <!--}-->
+        <!--}-->
+    <!--};-->
+    <!--time = setInterval(()=>{-->
+        <!--login();-->
+    <!--}, 1000);-->
+    <!--login();-->
+<!--</script>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101541988" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html" charset="utf-8"></script>-->
-    <!--<script src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="101537105"></script>-->
-    <!--<script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" charset="utf-8" data-appid="100229030" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html" data-xx-oo="xxoo"></script>-->
-    <!--<script type="text/javascript"  charset="utf-8"-->
-            <!--src="https://connect.qq.com/qc_jssdk.js"-->
-            <!--data-appid="100229030"-->
-            <!--data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"-->
-    <!--&gt;</script>-->
-    <script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/js-sdk-demo.html" charset="utf-8"></script>
 </head>
 <body>
-<!--<span id="qqLoginBtn"></span>-->
-<!--<script type="text/javascript">-->
-    <!--QC.Login({-->
-        <!--btnId:"qqLoginBtn"	//插入按钮的节点id-->
-    <!--});-->
-<!--</script>-->
-<div>2222222</div>
-</body>
-
+<span id="qqLoginBtn">6666</span>
 <script type="text/javascript">
-    let time, count = 0;
-    const login = () => {
-        if(QC.Login.check()){
-            alert("1");
-            //已登录，获取用户信息
-            QC.api("get_user_info")
-                .success(function(s){//成功回调
-                    localStorage.setItem('qqUser',JSON.stringify(s.data));
-                    clearInterval(time);
-                    document.getElementsByTagName("div")[0].innerHTML = s.data.nickname;
-                })
-                .error(function(f){//失败回调
-                    clearInterval(time);
-                    alert("获取用户信息失败！");
-                });
-
-        }else{
-            //未登录，直接打开QQ登录弹窗
-            if(!count){
-                alert("2");
-                QC.Login.showPopup({
-                    appId:"100229030",
-//                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
-                });
-                count ++;
-            }
-        }
-    };
-    time = setInterval(()=>{
-        login();
-    }, 1000);
-    login();
+    QC.Login({
+        btnId:"qqLoginBtn"	//插入按钮的节点id
+    });
+</script>
+</body>
+<script type="text/javascript">
+    var paras = {};
+    QC.api("get_user_info", paras)
+        .success(function(s){//成功回调
+            alert("获取用户信息成功！当前用户昵称为："+s.data.nickname);
+        })
+        .error(function(f){//失败回调
+            alert("获取用户信息失败！");
+        })
+        .complete(function(c){//完成请求回调
+            alert("获取用户信息完成！");
+        });
+    //    setTimeout(()=>{
+    //        document.getElementById("qqLoginBtn").childNodes[0].click();
+    //    }, 1000)
 </script>
 </html>
