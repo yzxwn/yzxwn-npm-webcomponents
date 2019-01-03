@@ -9,7 +9,6 @@
     <script type="text/javascript"  charset="utf-8"
             src="https://connect.qq.com/qc_jssdk.js"
             data-appid="101537105"
-            data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
     ></script>
     <!--<script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>-->
 </head>
@@ -44,17 +43,18 @@
             //未登录，直接打开QQ登录弹窗
             if(!count){
                 alert("2");
-                QC.Login.showPopup({
-                    appId:"100229030",
-//                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
-                });
+//                QC.Login.showPopup({
+//                    appId:"100229030",
+////                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
+//                });
+                QC.Login.showPopup();
                 count ++;
             }
         }
     };
-//    time = setInterval(()=>{
-//        login();
-//    }, 1000);
-//    login();
+    time = setInterval(()=>{
+        login();
+    }, 1000);
+    login();
 </script>
 </html>
