@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" data-redirecturi="http://qzonestyle.gtimg.cn/qzone/openapi/js-sdk-demo.html" charset="utf-8"></script>
+</head>
+<body>
+<span id="qqLoginBtn">6666</span>
+<script type="text/javascript">
+    QC.Login({
+        btnId:"qqLoginBtn"	//插入按钮的节点id
+    });
+</script>
+</body>
+<script type="text/javascript">
+    var paras = {};
+
+    QC.api("get_user_info", paras)
+        .success(function(s){//成功回调
+            alert("获取用户信息成功！当前用户昵称为："+s.data.nickname);
+        })
+        .error(function(f){//失败回调
+            alert("获取用户信息失败！");
+        })
+        .complete(function(c){//完成请求回调
+            alert("获取用户信息完成！");
+        });
+    //    setTimeout(()=>{
+    //        document.getElementById("qqLoginBtn").childNodes[0].click();
+    //    }, 1000)
+
+</script>
+</html>
