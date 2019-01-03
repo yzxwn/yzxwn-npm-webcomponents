@@ -20,13 +20,14 @@
         <!--btnId:"qqLoginBtn"	//插入按钮的节点id-->
     <!--});-->
 <!--</script>-->
-<div>444444444444</div>
+<div>11111111</div>
 </body>
 
 <script type="text/javascript">
     let time, count = 0;
     const login = () => {
         if(QC.Login.check()){
+            alert("1");
             //已登录，获取用户信息
             QC.api("get_user_info")
                 .success(function(s){//成功回调
