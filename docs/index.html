@@ -19,7 +19,7 @@
         <!--btnId:"qqLoginBtn"	//插入按钮的节点id-->
     <!--});-->
 <!--</script>-->
-<div>2222222</div>
+<div onclick="login()">2222222</div>
 </body>
 
 <script type="text/javascript">
@@ -30,7 +30,6 @@
     let time, count = 0;
     const login = () => {
         if(QC.Login.check()){
-            alert("1");
             //已登录，获取用户信息
             QC.api("get_user_info")
                 .success(function(s){//成功回调
@@ -46,7 +45,6 @@
         }else{
             //未登录，直接打开QQ登录弹窗
             if(!count){
-//                alert("2");
                 QC.Login.showPopup({
                     appId:"101537105",
                     redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
