@@ -19,11 +19,14 @@
         <!--btnId:"qqLoginBtn"	//插入按钮的节点id-->
     <!--});-->
 <!--</script>-->
-<div>2222222</div>
+<div onclick="aaa()">2222222</div>
 </body>
 
 <script type="text/javascript">
-
+    const aaa = ()=>{
+        window.open('https://graph.qq.com/oauth2.0/authorize?client_id=101537105&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fqzonestyle.gtimg.cn%2Fqzone%2Fopenapi%2Fredirect-1.0.1.html', 'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
+    };
+    aaa();
 
     let time, count = 0;
     const login = () => {
@@ -49,15 +52,14 @@
 //                    appId:"100229030",
 ////                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
 //                });
-//                QC.Login.showPopup();
-                window.open('https://graph.qq.com/oauth2.0/authorize?client_id=101537105&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fqzonestyle.gtimg.cn%2Fqzone%2Fopenapi%2Fredirect-1.0.1.html', 'oauth2Login' ,'height=525,width=585, toolbar=no, menubar=no, scrollbars=no, status=no, location=yes, resizable=yes');
+                QC.Login.showPopup();
                 count ++;
             }
         }
     };
-    time = setInterval(()=>{
-        login();
-    }, 1000);
-    login();
+//    time = setInterval(()=>{
+//        login();
+//    }, 1000);
+//    login();
 </script>
 </html>
