@@ -13,16 +13,18 @@
     <!--<script type="text/javascript" src="https://qzonestyle.gtimg.cn/qzone/openapi/qc_loader.js" data-appid="100229030" charset="utf-8"></script>-->
 </head>
 <body>
-<span id="qqLoginBtn"></span>
-<script type="text/javascript">
-    QC.Login({
-        btnId:"qqLoginBtn"	//插入按钮的节点id
-    });
-</script>
+<!--<span id="qqLoginBtn"></span>-->
+<!--<script type="text/javascript">-->
+    <!--QC.Login({-->
+        <!--btnId:"qqLoginBtn"	//插入按钮的节点id-->
+    <!--});-->
+<!--</script>-->
 <div>2222222</div>
 </body>
 
 <script type="text/javascript">
+
+
     let time, count = 0;
     const login = () => {
         if(QC.Login.check()){
@@ -42,12 +44,13 @@
         }else{
             //未登录，直接打开QQ登录弹窗
             if(!count){
-                alert("2");
+//                alert("2");
 //                QC.Login.showPopup({
 //                    appId:"100229030",
 ////                    redirectURI:"http://qzonestyle.gtimg.cn/qzone/openapi/redirect-1.0.1.html"
 //                });
-                QC.Login.showPopup();
+//                QC.Login.showPopup();
+                window.open('https://graph.qq.com/oauth2.0/authorize?client_id=101537105&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fqzonestyle.gtimg.cn%2Fqzone%2Fopenapi%2Fredirect-1.0.1.html', 'oauth2Login');
                 count ++;
             }
         }
