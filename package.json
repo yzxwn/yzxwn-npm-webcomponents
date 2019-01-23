@@ -1,0 +1,28 @@
+{
+  "name": "yzxwn-checkbox2",
+  "version": "1.0.1",
+  "description": "",
+  "main": "docs/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "node docs/index.js",
+    "build": "babel src -d docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yzxwn/test-npm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yzxwn/test-npm/issues"
+  },
+  "homepage": "https://github.com/yzxwn/test-npm#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1"
+  }
+}
