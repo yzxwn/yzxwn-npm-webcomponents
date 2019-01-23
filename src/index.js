@@ -3,7 +3,7 @@ const XwnCheckbox = (arr)=>{
     dom.innerHTML = arr;
     const styleJson = {
         color: "chartreuse",
-        ["font-size"]: "20px"
+        ["font-size"]: "30px"
     };
     const toString = (obj)=>{
         let string = "";
