@@ -1,0 +1,8 @@
+node_modules/
+src/
+test/
+.npmignore
+.babelrc
+.gitignore
+.idea
+package-lock.json
