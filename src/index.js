@@ -168,9 +168,6 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
                     const childBox = addBox(item[name.children], checkc);
                     checki.appendChild(checka);
                     checki.appendChild(checkc);
-                    // childBox.length && box.classList.add("yzxwn-checkbox-body-box-active");
-                    // childBox.length && (childBox.length < item[name.children].length) && box.classList.add("yzxwn-checkbox-body-box-someActive");
-                    // childCheck.push(childBox);
                     parentBox(checki);
                     childCheck = [...childCheck, ...childBox];
                 }else if(item[name.itemChildren]){
@@ -181,9 +178,6 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
                     checki.appendChild(checka);
                     checki.appendChild(checkc);
                     const childBox = addBox(item[name.itemChildren], checkc);
-                    // item[name.itemChildren].length && box.classList.add("yzxwn-checkbox-body-box-active");
-                    // childBox.length && (childBox.length < item[name.itemChildren].length) && box.classList.add("yzxwn-checkbox-body-box-someActive");
-                    // childCheck.push(childBox);
                     parentBox(checki);
                     childCheck = [...childCheck, ...childBox];
                 }
@@ -219,13 +213,13 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
                     const childCheck = Array.from(target.parentNode.nextSibling.nextSibling.getElementsByClassName("yzxwn-checkbox-body-box"));
                     childCheck.map((item)=> {
                         if(!item.parentNode.nextSibling){
-                            value.splice(value.indexOf(item.parentNode.dataset.key), 1);
+                            value.indexOf(item.parentNode.dataset.key)>-1&&value.splice(value.indexOf(item.parentNode.dataset.key), 1);
                             item.parentNode.dataset.check = false;
                         }
                         item.classList.remove("yzxwn-checkbox-body-box-active");
                     });
                 }else{
-                    value.splice(value.indexOf(key), 1);
+                    value.indexOf(key)>-1&&value.splice(value.indexOf(key), 1);
                     target.parentNode.dataset.check = false;
                 }
             }else{
@@ -245,27 +239,7 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
                     target.parentNode.dataset.check = true;
                 }
             }
-            //显示父选择
             parentBox(dom);
-            // const parentCheck = target.parentNode.parentNode.parentNode;
-            // if(parentCheck.className.includes("yzxwn-checkbox-itemChildren")||parentCheck.className.includes("yzxwn-checkbox-children")){
-            //     const checkbox = Array.from(parentCheck.getElementsByClassName("yzxwn-checkbox-body"));
-            //     const checkbox1 = parentCheck.previousSibling.previousSibling.childNodes[0];
-            //     let check = 0;
-            //     checkbox.map((item)=>{
-            //         if(!item.dataset.check || item.dataset.check === "true"){
-            //             check += 1;
-            //         }
-            //     });
-            //     if(check){
-            //         checkbox1.classList.add("yzxwn-checkbox-body-box-active");
-            //         (check<checkbox.length)&&checkbox1.classList.add("yzxwn-checkbox-body-box-someActive");
-            //         (check===checkbox.length)&&checkbox1.classList.remove("yzxwn-checkbox-body-box-someActive");
-            //     }else{
-            //         checkbox1.classList.remove("yzxwn-checkbox-body-box-active");
-            //         checkbox1.classList.remove("yzxwn-checkbox-body-box-someActive");
-            //     }
-            // }
             callback(value);
         }else if(target.className.includes("yzxwn-checkbox-parent-contract")){
             const box = target;
