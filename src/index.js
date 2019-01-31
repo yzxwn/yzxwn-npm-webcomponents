@@ -1,4 +1,4 @@
-const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", check: "check", children: "children", itemChildren: "itemCh"})=>{
+const XwnCheckbox = (arr, callback, color="#40a9ff", name={key: "key", value: "value", check: "check", children: "children", itemChildren: "itemCh"})=>{
     const cssText = `.yzxwn-checkbox{
         position: relative;
         width: 100%;
@@ -18,7 +18,7 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
         display: inline-flex!important;
     }
     .yzxwn-checkbox-parent>.yzxwn-checkbox-body{
-        border: 1px solid #40a9ff;
+        border: 1px solid ${color};
         padding: 0 20px 0 3px;
         border-radius: 3px;
     }
@@ -47,11 +47,11 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
         width: 14px;
         height: 14px;
         border-radius: 2px;
-        border: 1px solid #40a9ff;
+        border: 1px solid ${color};
         background: white;
     }
     .yzxwn-checkbox-body-box-active {
-        background: #40a9ff;
+        background: ${color};
         border-color: transparent;
     }
     .yzxwn-checkbox-body-box:before {
@@ -90,7 +90,7 @@ const XwnCheckbox = (arr, color, callback, name={key: "key", value: "value", che
         left:0;
         width: 8px;
         height: 8px;
-        border: 1px solid #40a9ff;
+        border: 1px solid ${color};
         border-width: 0 2px 2px 0;
         transform: rotate(-135deg);
         cursor: pointer;

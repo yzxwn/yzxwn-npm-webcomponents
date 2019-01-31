@@ -6,11 +6,60 @@
     <script src="./index.js"></script>
 </head>
 <body>
-<div class="test"></div>
-<br/>
+<div class="left">
+    参数：<button onclick="resizeUser()">重置</button>
+    <textarea placeholder="数组" class="arr"></textarea>
+    <textarea placeholder="颜色默认：#40a9ff" class="color"></textarea>
+    <textarea placeholder="命名默认：{key: 'key', value: 'value', check: 'check', children: 'children', itemChildren: 'itemCh'}" class="name"></textarea>
+    <textarea placeholder="回调" class="callback" readonly=""></textarea>
+    <div class="test"></div>
+</div>
+<div class="right">
+
+</div>
+<style>
+    body{
+        display: flex;
+        align-items: flex-start;
+    }
+    .left,.right{
+        display: inline-block;
+        padding: 20px;
+        border: 1px solid #d8d8d8;
+    }
+    .left{
+        width: 500px;
+        box-sizing: border-box;
+        flex: none;
+        margin-right: 10px;
+    }
+    .right{
+        flex: auto;
+    }
+    .test{
+        word-wrap: break-word;
+    }
+    textarea{
+        display: block;
+        width: 100%;
+        height: 50px;
+        margin-bottom: 10px;
+        resize: vertical;
+    }
+    textarea.color{
+        resize: none;
+        height: 16px;
+    }
+    textarea.arr{
+        height: 500px;
+    }
+    textarea.callback{
+        resize: none;
+    }
+</style>
 <script>
-    const dom = document.querySelector("body");
-    const arr = [{key: "all", value: "全选", children: [
+    const dom = document.querySelector(".right");
+    let arr = [{key: "all", value: "全选", children: [
         {key: "1", value: "第1个", children: [
             {key: "11", value: "第11个"},
             {key: "12", value: "第12个"},
@@ -56,11 +105,22 @@
         ]},
         {key: "5", value: "第5个"},
     ]}];
-    const callback = (value)=>{
-        document.getElementsByClassName("test")[0].innerHTML = value.join(",")||"无";
+    let callback = (value)=>{
+        document.querySelector(".callback").value = `选择：[${value.join(",")}]`;
     };
-    const xwn = XwnCheckbox(arr, "#40a9ff", callback);
-    dom.appendChild(xwn.dom);
+    const resize = (int) => {
+        const {arr, callback, color, name} = int;
+        const xwn = XwnCheckbox(arr, callback, color, name);
+        dom.innerHTML = null;
+        dom.appendChild(xwn.dom);
+    };
+    resize({arr, callback});
+    document.querySelector(".arr").value = JSON.stringify(arr, null, 2);
+    const resizeUser = () => {
+        const color = document.querySelector(".color").value||undefined;
+        arr = JSON.parse(document.querySelector(".arr").value);
+        resize({arr, callback, color});
+    };
 </script>
 </body>
 </html>
