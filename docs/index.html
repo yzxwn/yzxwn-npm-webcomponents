@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>yzxwn-checkbox</title>
+    <script src="./index.js"></script>
+</head>
+<body>
+<div class="test"></div>
+<br/>
+<script>
+    const dom = document.querySelector("body");
+    const arr = [{key: "all", value: "全选", children: [
+        {key: "1", value: "第1个", children: [
+            {key: "11", value: "第11个"},
+            {key: "12", value: "第12个"},
+            {key: "13", value: "第13个"},
+            {key: "14", value: "第14个", children: [
+                {key: "141", value: "第141个", check: true},
+                {key: "142", value: "第142个"},
+                {key: "143", value: "第143个"},
+                {key: "144", value: "第144个", itemCh: [
+                    {key: "1441", value: "第1441个", check: true},
+                    {key: "1442", value: "第1442个", check: true},
+                    {key: "1443", value: "第1443个", check: true},
+                    {key: "1444", value: "第1444个", check: true},
+                    {key: "1445", value: "第1445个", check: true},
+                ]},
+            ]},
+            {key: "15", value: "第15个"},
+            {key: "16", value: "第16个"},
+            {key: "17", value: "第17个"},
+        ]},
+        {key: "2", value: "第2个"},
+        {key: "3", value: "第3个", itemCh: [
+            {key: "31", value: "第31个", itemCh: [
+                {key: "311", value: "第311个"},
+                {key: "312", value: "第312个", check: true},
+            ]},
+            {key: "32", value: "第32个", children: [
+                {key: "321", value: "第321个", check: true},
+                {key: "322", value: "第322个", check: true},
+                {key: "323", value: "第323个", check: true},
+            ]},
+            {key: "33", value: "第33个", check: true},
+        ]},
+        {key: "4", value: "第4个", children: [
+            {key: "41", value: "第41个", children: [
+                {key: "411", value: "第411个", children: [
+                    {key: "4111", value: "第4111个"},
+                    {key: "4112", value: "第4112个"},
+                ]},
+                {key: "412", value: "第412个", check: true},
+            ]},
+            {key: "42", value: "第42个", check: true},
+        ]},
+        {key: "5", value: "第5个"},
+    ]}];
+    const callback = (value)=>{
+        document.getElementsByClassName("test")[0].innerHTML = value.join(",")||"无";
+    };
+    const xwn = XwnCheckbox(arr, "#40a9ff", callback);
+    dom.appendChild(xwn.dom);
+</script>
+</body>
+</html>
