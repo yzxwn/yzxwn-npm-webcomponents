@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定制N级联动复选框</title>
+    <Link rel="import" href="components/index.html"/>
+    <style>
+        body{
+            display: flex;
+            align-items: flex-start;
+            margin: 0;
+        }
+        .left,.right{
+            display: inline-block;
+            padding: 20px;
+        }
+        .left{
+            width: 500px;
+            box-sizing: border-box;
+            flex: none;
+            margin-right: 10px;
+        }
+        .right{
+            flex: auto;
+            border-left: 1px solid #d8d8d8;
+        }
+        .test{
+            word-wrap: break-word;
+        }
+        .look{
+            float: right;
+        }
+        textarea{
+            display: block;
+            width: 100%;
+            height: 50px;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        textarea.color{
+            resize: none;
+            height: 16px;
+        }
+        textarea.arr{
+            height: 500px;
+        }
+        textarea.callback{
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+<div class="left">
+    参数：
+    <textarea placeholder="数组" class="arr"></textarea>
+    主题色：<input type="color" value="#40a9ff" class="color"/>
+    <textarea placeholder="命名默认：{key: 'key', value: 'value', check: 'check', children: 'children', itemChildren: 'itemCh'}" class="name"></textarea>
+    <textarea placeholder="回调" class="callback" readonly=""></textarea>
+    <div class="test"></div>
+    <button onclick="resizeUser()" class="look">查看</button>
+</div>
+<div class="right">
+    <my-checkbox>
+    </my-checkbox>
+</div>
+<script>
+    let arr = [{key: "all", value: "全选", children: [
+        {key: "1", value: "第1个", children: [
+            {key: "11", value: "第11个", itemCh: [
+                {key: "111", value: "第111个", check: true},
+                {key: "112", value: "第112个"},
+                {key: "113", value: "第113个"},
+            ]},
+            {key: "12", value: "第12个", children: [
+                {key: "121", value: "第121个", check: true, itemCh: [
+                    {key: "1211", value: "第1211个", check: true},
+                    {key: "1212", value: "第1212个", check: true},
+                ]},
+                {key: "122", value: "第122个", itemCh: [
+                    {key: "1221", value: "第1221个"},
+                    {key: "1222", value: "第1222个", check: true},
+                    {key: "1222", value: "第1222个", check: true},
+                ]},
+                {key: "123", value: "第123个", itemCh: [
+                    {key: "1231", value: "第1231个"},
+                ]},
+            ]},
+            {key: "13", value: "第13个", itemCh: [
+                {key: "131", value: "第131个"},
+            ]},
+        ]},
+        {key: "2", value: "第2个", children: [
+            {key: "21", value: "第21个", itemCh: [
+                {key: "211", value: "第211个"},
+                {key: "212", value: "第212个", check: true},
+            ]},
+            {key: "22", value: "第22个", itemCh: [
+                {key: "221", value: "第221个"},
+                {key: "222", value: "第222个"},
+            ]},
+        ]},
+        {key: "3", value: "第3个"},
+    ]}];
+//    let arr = [{key: "all", value: "全选", children: [
+//        {key: "1", value: "第1个", children: [
+//            {key: "11", value: "第11个"},
+//            {key: "12", value: "第12个"},
+//            {key: "13", value: "第13个"},
+//            {key: "14", value: "第14个", children: [
+//                {key: "141", value: "第141个", check: true},
+//                {key: "142", value: "第142个"},
+//                {key: "143", value: "第143个"},
+//                {key: "144", value: "第144个", itemCh: [
+//                    {key: "1441", value: "第1441个", check: true},
+//                    {key: "1442", value: "第1442个", check: true},
+//                    {key: "1443", value: "第1443个", check: true},
+//                    {key: "1444", value: "第1444个", check: true},
+//                    {key: "1445", value: "第1445个", check: true},
+//                ]},
+//            ]},
+//            {key: "15", value: "第15个"},
+//            {key: "16", value: "第16个"},
+//            {key: "17", value: "第17个"},
+//        ]},
+//        {key: "2", value: "第2个"},
+//        {key: "3", value: "第3个", itemCh: [
+//            {key: "31", value: "第31个", itemCh: [
+//                {key: "311", value: "第311个"},
+//                {key: "312", value: "第312个", check: true},
+//            ]},
+//            {key: "32", value: "第32个", children: [
+//                {key: "321", value: "第321个", check: true},
+//                {key: "322", value: "第322个", check: true},
+//                {key: "323", value: "第323个", check: true},
+//            ]},
+//            {key: "33", value: "第33个", check: true},
+//        ]},
+//        {key: "4", value: "第4个", children: [
+//            {key: "41", value: "第41个", children: [
+//                {key: "411", value: "第411个", children: [
+//                    {key: "4111", value: "第4111个"},
+//                    {key: "4112", value: "第4112个"},
+//                ]},
+//                {key: "412", value: "第412个", check: true},
+//            ]},
+//            {key: "42", value: "第42个", check: true},
+//        ]},
+//        {key: "5", value: "第5个"},
+//    ]}];
+    let callback = (value)=>{
+        document.querySelector(".callback").value = `选择：[${value.join(",")}]`;
+    };
+    const elem = document.querySelector("my-checkbox").attributes;
+    Object.defineProperty(elem,"change",{
+        set: function (v) {
+            callback(JSON.parse(v));
+        }
+    });
+    const resize = (int) => {
+        document.querySelector("my-checkbox").setAttribute("props", JSON.stringify(int));
+    };
+
+    const color = document.querySelector(".color").value||undefined;
+    resize({arr, color});
+    document.querySelector(".arr").value = JSON.stringify(arr, null, 2);
+    const resizeUser = () => {
+        const color = document.querySelector(".color").value||undefined;
+        arr = JSON.parse(document.querySelector(".arr").value);
+        resize({arr, color});
+    };
+</script>
+</body>
+</html>

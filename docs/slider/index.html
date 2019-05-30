@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>滑动条</title>
+    <Link rel="import" href="components/index.html"/>
+    <style>
+        html,body{
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            margin: 0;
+        }
+        .left>div{
+            margin: 20px 0;
+        }
+        .left{
+            flex: none;
+            padding: 100px 10px;
+        }
+        .right{
+            border-left: 1px solid #d8d8d8;
+            flex: auto;
+            position:relative;
+            padding:100px 0 0 100px;
+        }
+        .width{
+            width: 120px;
+        }
+        .defaultValue,.maxValue{
+            width: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <div>
+            主题色：<input type="color" value="#91d5ff" class="color" oninput="changeValue(this.value, 'color')"/>
+        </div>
+        <div>
+            宽度：
+            <input class="width" type="number" value="300" oninput="changeValue(this.value, 'width')"/>px
+        </div>
+        <div>
+            刻度：
+            <input class="defaultValue" type="number" value="30" oninput="changeValue(this.value, 'defaultValue')"/>
+            /
+            <input class="maxValue" type="number" value="60" oninput="changeValue(this.value, 'maxValue')"/>
+        </div>
+    </div>
+    <div class="right">
+        <my-slider defaultValue="30" maxValue="60"></my-slider>
+    </div>
+    <script>
+        const slider = document.querySelector("my-slider");
+        changeValue(document.querySelector(".width").value, 'width');
+        changeValue(document.querySelector(".defaultValue").value, 'defaultValue');
+        changeValue(document.querySelector(".maxValue").value, 'maxValue');
+        changeValue(document.querySelector(".color").value, 'color');
+        Object.defineProperty(slider.attributes, "defaultValue", {
+            set: function (v) {
+                document.querySelector(".defaultValue").value = v;
+            }
+        });
+        function changeValue(v, type) {
+            slider.setAttribute(type, v);
+        }
+    </script>
+</body>
+</html>

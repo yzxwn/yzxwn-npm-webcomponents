@@ -1,4 +1,7 @@
-# test
+# web组件
 
-### 定制多级联动复选框
-[查看演示](https://yzxwn.github.io/test-npm)
+### [查看演示](https://yzxwn.github.io/yzxwn-npm-webcomponents)
+
+### Web Components：定制元素
+
+### npm安装：npm install yzxwn-npm-webcomponents

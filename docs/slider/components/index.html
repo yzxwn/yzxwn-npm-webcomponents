@@ -1,0 +1,128 @@
+<template id="template">
+    <style>
+        :root{
+            --global-color: #91d5ff;
+        }
+        .slider{
+            position: relative;
+            height: 30px;
+            display: inline-block;
+            margin: auto;
+        }
+        .slider-rail{
+            position: absolute;
+            left: 0;
+            top: 14px;
+            width: 100%;
+            height: 4px;
+            background-color: #e5e5e5;
+        }
+        .slider-track{
+            position: absolute;
+            left: 0;
+            top: 14px;
+            height: 4px;
+            background-color: var(--global-color);
+        }
+        .slider-handle{
+            position: absolute;
+            top: 9px;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background-color: white;
+            border: 2px solid var(--global-color);
+        }
+        .slider-contend{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 30px;
+            cursor: pointer;
+        }
+        .slider-count{
+            position: absolute;
+            right: -60px;
+            top: 4px;
+        }
+    </style>
+    <div class="slider">
+        <div class="slider-rail">
+
+        </div>
+        <div class="slider-track">
+
+        </div>
+        <div class="slider-handle" aria-disabled="false">
+
+        </div>
+        <div class="slider-contend"></div>
+        <div class="slider-count">
+        </div>
+    </div>
+</template>
+<script>
+    (function () {
+        const template = document.currentScript.ownerDocument.querySelector('template');
+        const elem = {
+            prototype: Object.create(HTMLElement.prototype, {
+                createdCallback: {
+                    value: function createdCallback() {
+                        this.appendChild(template.content.cloneNode(true));
+                    }
+                },
+                attributeChangedCallback: {
+                    value: function () {
+                        const sliderDom = document.querySelector(".slider");
+                        const contendDom = document.querySelector(".slider-contend");
+                        const trackDom = document.querySelector(".slider-track");
+                        const handleDom = document.querySelector(".slider-handle");
+                        const countDom = document.querySelector(".slider-count");
+
+                        //初始化：宽度，刻度，初始刻度
+                        let start = false, width = Number(this.getAttribute("width")), defaultValue = Number(this.getAttribute("defaultValue")), maxValue = Number(this.getAttribute("maxValue"));
+
+                        defaultValue = defaultValue>maxValue?maxValue:defaultValue<0?0:defaultValue;
+                        handleDom.style.left = defaultValue/maxValue*100+"%";
+                        trackDom.style.width = defaultValue/maxValue*100+"%";
+                        sliderDom.style.width = width + "px";
+                        countDom.innerHTML = defaultValue+"/"+maxValue;
+                        document.body.style.setProperty('--global-color', this.getAttribute("color"));
+                        this.attributes.defaultValue = defaultValue;
+                        changeValue = changeValue.bind(this);
+
+                        contendDom.onmousedown = function (e) {
+                            start = true;
+                            changeValue(e);
+                            event.preventDefault ? event.preventDefault() : event.returnValue = false;
+                        };
+                        document.body.onmousemove = function (e) {
+                            if(start){
+                                changeValue(e);
+                            }
+                        };
+                        document.body.onmouseup = function (e) {
+                            start = false;
+                        };
+
+                        function changeValue(e) {
+                            let left = 0, dom = contendDom;
+                            do{
+                                left += dom.offsetLeft;
+                                dom = dom.offsetParent;
+                            }while (dom !== document.body);
+                            let x1 = Math.round((e.clientX - left)/width*100);
+                            x1 = x1>100?100:x1<0?0:x1;
+                            handleDom.style.left = x1+"%";
+                            trackDom.style.width = x1+"%";
+                            countDom.innerHTML = Math.round(x1/100*maxValue)+"/"+maxValue;
+                            this.attributes.defaultValue = Math.round(x1/100*maxValue);
+                        }
+                    }
+                }
+            })
+        };
+        document.registerElement('my-slider', elem);
+    })();
+</script>

@@ -2,125 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>yzxwn-checkbox</title>
-    <script src="./index.js"></script>
+    <title>web组件</title>
+    <style>
+        html{
+            height: 100%;
+        }
+        body{
+            display: flex;
+            height: 100%;
+            margin: 0;
+        }
+        .list{
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .list li{
+            cursor: pointer;
+        }
+        .list .active{
+            color: #4291e0;
+        }
+        .iframe{
+            display: inline-block;
+            flex: auto;
+            border: 0;
+            border-left: 1px solid #d6d6d6;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
-<div class="left">
-    参数：<button onclick="resizeUser()">重置</button>
-    <textarea placeholder="数组" class="arr"></textarea>
-    <textarea placeholder="颜色默认：#40a9ff" class="color"></textarea>
-    <textarea placeholder="命名默认：{key: 'key', value: 'value', check: 'check', children: 'children', itemChildren: 'itemCh'}" class="name"></textarea>
-    <textarea placeholder="回调" class="callback" readonly=""></textarea>
-    <div class="test"></div>
-</div>
-<div class="right">
+    <ol class="list">
+        <li data-src="checkbox/index.html">定制N级联动复选框</li>
+        <li data-src="slider/index.html">滑动条</li>
+    </ol>
+    <iframe class="iframe" src=""></iframe>
+    <script>
+        const listDom = document.querySelector(".list");
+        const iframeDom = document.querySelector(".iframe");
+        const listItem = [...listDom.childNodes].filter(function (item) {
+            return item.nodeName.toLocaleLowerCase() === "li";
+        });
 
-</div>
-<style>
-    body{
-        display: flex;
-        align-items: flex-start;
-    }
-    .left,.right{
-        display: inline-block;
-        padding: 20px;
-        border: 1px solid #d8d8d8;
-    }
-    .left{
-        width: 500px;
-        box-sizing: border-box;
-        flex: none;
-        margin-right: 10px;
-    }
-    .right{
-        flex: auto;
-    }
-    .test{
-        word-wrap: break-word;
-    }
-    textarea{
-        display: block;
-        width: 100%;
-        height: 50px;
-        margin-bottom: 10px;
-        resize: vertical;
-    }
-    textarea.color{
-        resize: none;
-        height: 16px;
-    }
-    textarea.arr{
-        height: 500px;
-    }
-    textarea.callback{
-        resize: none;
-    }
-</style>
-<script>
-    const dom = document.querySelector(".right");
-    let arr = [{key: "all", value: "全选", children: [
-        {key: "1", value: "第1个", children: [
-            {key: "11", value: "第11个"},
-            {key: "12", value: "第12个"},
-            {key: "13", value: "第13个"},
-            {key: "14", value: "第14个", children: [
-                {key: "141", value: "第141个", check: true},
-                {key: "142", value: "第142个"},
-                {key: "143", value: "第143个"},
-                {key: "144", value: "第144个", itemCh: [
-                    {key: "1441", value: "第1441个", check: true},
-                    {key: "1442", value: "第1442个", check: true},
-                    {key: "1443", value: "第1443个", check: true},
-                    {key: "1444", value: "第1444个", check: true},
-                    {key: "1445", value: "第1445个", check: true},
-                ]},
-            ]},
-            {key: "15", value: "第15个"},
-            {key: "16", value: "第16个"},
-            {key: "17", value: "第17个"},
-        ]},
-        {key: "2", value: "第2个"},
-        {key: "3", value: "第3个", itemCh: [
-            {key: "31", value: "第31个", itemCh: [
-                {key: "311", value: "第311个"},
-                {key: "312", value: "第312个", check: true},
-            ]},
-            {key: "32", value: "第32个", children: [
-                {key: "321", value: "第321个", check: true},
-                {key: "322", value: "第322个", check: true},
-                {key: "323", value: "第323个", check: true},
-            ]},
-            {key: "33", value: "第33个", check: true},
-        ]},
-        {key: "4", value: "第4个", children: [
-            {key: "41", value: "第41个", children: [
-                {key: "411", value: "第411个", children: [
-                    {key: "4111", value: "第4111个"},
-                    {key: "4112", value: "第4112个"},
-                ]},
-                {key: "412", value: "第412个", check: true},
-            ]},
-            {key: "42", value: "第42个", check: true},
-        ]},
-        {key: "5", value: "第5个"},
-    ]}];
-    let callback = (value)=>{
-        document.querySelector(".callback").value = `选择：[${value.join(",")}]`;
-    };
-    const resize = (int) => {
-        const {arr, callback, color, name} = int;
-        const xwn = XwnCheckbox(arr, callback, color, name);
-        dom.innerHTML = null;
-        dom.appendChild(xwn.dom);
-    };
-    resize({arr, callback});
-    document.querySelector(".arr").value = JSON.stringify(arr, null, 2);
-    const resizeUser = () => {
-        const color = document.querySelector(".color").value||undefined;
-        arr = JSON.parse(document.querySelector(".arr").value);
-        resize({arr, callback, color});
-    };
-</script>
+        iframeDom.src = listItem[0].dataset.src;
+        listItem[0].classList.add("active");
+
+        listDom.addEventListener("click", function (e) {
+            if(e.target.nodeName.toLocaleLowerCase() === "li"){
+                listItem.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+                iframeDom.src = e.target.dataset.src;
+                e.target.classList.add("active");
+            }
+        })
+    </script>
 </body>
 </html>
