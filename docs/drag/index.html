@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定制页面</title>
+    <Link rel="import" href="components/index.html"/>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+        }
+        .left{
+            flex: none;
+            padding: 100px 10px;
+        }
+        .right{
+            border-left: 1px solid #d8d8d8;
+            flex: auto;
+            position:relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="left">
+        <div>
+            宽度：
+            <input class="width" type="number" value="600" oninput="changeValue(this.value, 'width')"/>px
+        </div>
+        <div>
+            高度：
+            <input class="height" type="number" value="500" oninput="changeValue(this.value, 'height')"/>px
+        </div>
+    </div>
+    <div class="right">
+        <my-module></my-module>
+    </div>
+    <script>
+        const slider = document.querySelector("my-module");
+        changeValue(document.querySelector(".width").value, 'width');
+        changeValue(document.querySelector(".height").value, 'height');
+        function changeValue(v, type) {
+            slider.setAttribute(type, v);
+        }
+    </script>
+</body>
+</html>

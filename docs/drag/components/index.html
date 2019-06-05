@@ -1,0 +1,188 @@
+<template>
+    <style>
+        .moduleBody{
+            position: relative;
+            user-select: none;/*鼠标拖拽时不选中文字*/
+            margin-left: 100px;
+            margin-top: 50px;
+        }
+        .module-panel{
+
+        }
+        .module-panel>button{
+            display: inline-block;
+            margin-left: -80px;
+        }
+        .module-panel>div.module{
+            position: absolute;
+            text-align: center;
+            color: #ffffff;
+        }
+        .module-panel>div>div.mask{
+            background-color: #fff;
+            opacity: .7;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            cursor: move;
+            display: none;
+        }
+        .module-panel.do-layout>div>div.mask{
+            display: block;
+        }
+        .module-panel.do-layout>div.module.drag{
+            border: 2px dashed #fa2202;
+            z-index: 999;
+        }
+    </style>
+    <div class="moduleBody" data-col="4">
+        <div style="background-color: #4291e0" data-row="4">1</div>
+        <div style="background-color: #87cd18" data-row="8">2</div>
+        <div style="background-color: #b89a19" data-row="4">3</div>
+        <div style="background-color: #e0603d" data-row="4">4</div>
+        <div style="background-color: #e06baf" data-row="4">5</div>
+        <div style="background-color: #895fe0" data-row="8">6</div>
+        <div style="background-color: #4de0e0" data-row="4">7</div>
+        <div style="background-color: #15e052" data-row="6">8</div>
+        <div style="background-color: #e2dd49" data-row="6">9</div>
+    </div>
+</template>
+<script>
+    (function () {
+        const template = document.currentScript.ownerDocument.querySelector('template');
+        const elem = {
+            prototype: Object.create(HTMLElement.prototype, {
+                createdCallback: {
+                    value: function createdCallback() {
+                        this.appendChild(template.content.cloneNode(true));
+                    }
+                },
+                attributeChangedCallback: {
+                    value: function () {
+                        //一行12份
+                        const defs = {
+                            row: 4,
+                            col: 4
+                        }, _this = this;
+                        this.innerHTML = "";
+                        this.appendChild(template.content.cloneNode(true));
+
+                        function CustomPage(el, options) {
+                            this._el = typeof el === "string" ? document.querySelector(el) : el;
+                            this._el.style.width = _this.getAttribute("width")+"px";
+                            this._el.style.height = _this.getAttribute("height")+"px";
+                            this._el.className += " module-panel";
+                            this._masks = [];
+                            this._modules = this._el.children;
+                            this.layout();
+                            this._botton = document.createElement("button");
+                            this._botton.innerHTML = "开始定制";
+                            this._el.appendChild(this._botton);
+                            this.handler();
+                        }
+                        CustomPage.prototype = {
+                            layout: function () {
+                                let _m, _c = 100/(this._el.dataset.col||defs.col), _r, _top = 0, _left = 0;
+                                for(let i = 0; i<this._modules.length;i++){
+                                    _m = this._modules[i];
+                                    _m.className += " module";
+                                    _r = _m.dataset.row||defs.row;
+                                    _m.style.width = _r/12*100+"%";
+                                    _m.style.height = _c+"%";
+                                    _m.style.left = _left +"%";
+                                    _m.style.top = _top +"%";
+                                    _m.appendChild(this.mask());
+                                    _left += _r/12*100;
+                                    if(Math.ceil(_left) === 100){
+                                        _left = 0;
+                                        _top += _c;
+                                    }
+                                }
+                            },
+                            mask: function () {
+                                const mask = document.createElement("div");
+                                mask.className += " mask";
+                                this._masks.push(mask);
+                                return mask;
+                            },
+                            handler: function () {
+                                const _that = this;
+                                let _mask, _move, _target, _start;
+                                this._botton.onclick = function () {
+                                    _that._state = _that._state?0:1;
+                                    if(_that._state){
+                                        this.innerHTML = "结束定制";
+                                        _that._el.className += " do-layout";
+                                    }else{
+                                        this.innerHTML = "开始定制";
+                                        _that._el.className = _that._el.className.replace(" do-layout", "");
+                                    }
+                                    let _offset = {
+                                        left: 0,
+                                        top: 0
+                                    }, _el = _that._el;
+                                    do{
+                                        _offset = {
+                                            left: _offset.left + _el.offsetLeft,
+                                            top: _offset.top + _el.offsetTop
+                                        };
+                                        _el = _el.parentNode;
+                                    }while(_el !== document.body);
+                                    for(let i=0;i<_that._masks.length;i++){
+                                        _mask = _that._masks[i];
+                                        _mask.onmousedown = function (e) {
+                                            const _p = _move =  this.parentNode;
+                                            _p.className += " drag";
+                                            _p.offset = {
+                                                left: _p.style.left,
+                                                top: _p.style.top
+                                            };
+                                            _start = _p.offset;
+                                            document.onmousemove = function (e) {
+                                                _p.style.left = (e.pageX-_offset.left+10)+"px";
+                                                _p.style.top = (e.pageY-_offset.top+10)+"px";
+                                            };
+                                            document.onmouseup = function () {
+                                                _p.className = _p.className.replace(" drag", "");
+                                                document.onmouseup = null;
+                                                document.onmousemove = null;
+                                                if(_move){
+                                                    _p.style.left = _p.offset.left;
+                                                    _p.style.top = _p.offset.top;
+                                                    _move = _target = null;
+                                                }
+                                            }
+                                        };
+                                        _mask.onmouseenter = function () {
+                                            if(_move&&this.parentNode!==_move){
+                                                if(_move.dataset.row === this.parentNode.dataset.row){
+                                                    _target = this.parentNode;
+                                                    const l = _target.style.left;
+                                                    const t = _target.style.top;
+                                                    _target.style.left = _start.left;
+                                                    _target.style.top = _start.top;
+                                                    _move.offset.left = l;
+                                                    _move.offset.top = t;
+                                                    _start = {
+                                                        left: l,
+                                                        top: t
+                                                    };
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+                        new CustomPage(".moduleBody", {});
+                    }
+                }
+            })
+        };
+        document.registerElement('my-module', elem);
+    })();
+</script>
